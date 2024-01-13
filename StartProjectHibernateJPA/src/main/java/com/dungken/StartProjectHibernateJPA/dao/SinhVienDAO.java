@@ -9,4 +9,8 @@ public interface SinhVienDAO {
     public SinhVien getById(int id);
     public List<SinhVien> getAll();
     public List<SinhVien> getByTen(String ten);
+    public void update(SinhVien sinhVien);
+    public int updateAllByTen(String ten);
+    public void delete(int id);
+    public int deleteByTen(String ten);
 }

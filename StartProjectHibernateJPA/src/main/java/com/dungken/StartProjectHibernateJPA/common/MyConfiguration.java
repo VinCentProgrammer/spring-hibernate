@@ -23,20 +23,84 @@ public class MyConfiguration {
                 int luaChon = sc.nextInt();
                 sc.nextLine();
                 if (luaChon == 1) {
-                    // Goi phuong thuc them sinh vien
                     themSinhVien(sinhVienDAOImpl);
                 } else if (luaChon == 2) {
-                    // Goi phuong thuc lay sinh vien
                     timSinhVien(sinhVienDAOImpl);
                 } else if (luaChon == 3) {
-                    // Goi phuong thuc tim sinh vien theo ten
                     timSinhVienTheoTen(sinhVienDAOImpl);
                 } else if (luaChon == 4) {
-                    // Goi phuong thuc lay tat ca sinh vien
                     layTatCaSinhVien(sinhVienDAOImpl);
+                } else if (luaChon == 5) {
+                    capNhapSinhVien(sinhVienDAOImpl);
+                } else if (luaChon == 6) {
+                    capNhapSinhVienTatCaTheoTen(sinhVienDAOImpl);
+                } else if (luaChon == 7) {
+                    xoaSinhVienTheoId(sinhVienDAOImpl);
+                } else if (luaChon == 8) {
+                    xoaSinhVienTheoTen(sinhVienDAOImpl);
                 }
             }
         };
+    }
+
+    private void xoaSinhVienTheoTen(SinhVienDAOImpl sinhVienDAOImpl) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhap ten can xoa: ");
+        String ten = sc.nextLine();
+
+        int rows = sinhVienDAOImpl.deleteByTen(ten);
+        if(rows>0) {
+            System.out.println("Da xoa tat ca sinh vien co ten " + ten);
+        } else {
+            System.out.println("Khong co sinh vien nao co ten " + ten + " can xoa!");
+        }
+    }
+
+    private void xoaSinhVienTheoId(SinhVienDAOImpl sinhVienDAOImpl) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhap id: ");
+        int id = sc.nextInt();
+        SinhVien sinhVien = new SinhVien();
+        sinhVien.setId(id);
+        SinhVien sinhVienResult = sinhVienDAOImpl.getById(id);
+        if(sinhVienResult == null) {
+            System.out.println("Khong co sinh vien co ID can xoa");
+        } else {
+            sinhVienDAOImpl.delete(id);
+            System.out.println("Da xoa sinh vien co ID " + id + " thanh cong!");
+        }
+    }
+
+    private void capNhapSinhVienTatCaTheoTen(SinhVienDAOImpl sinhVienDAOImpl) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhap ten can cap nhat: ");
+        String ten = sc.nextLine();
+
+        int rows = sinhVienDAOImpl.updateAllByTen(ten);
+        System.out.println("Co " + rows + " da thay doi!");
+    }
+
+    private void capNhapSinhVien(SinhVienDAOImpl sinhVienDAOImpl) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nhap id: ");
+        int id = sc.nextInt();
+        SinhVien sinhVien = sinhVienDAOImpl.getById(id);
+        if(sinhVien == null) {
+            System.out.println("Khong co sinh vien can cap nhat!");
+        } else {
+            // Nhap thong tin sinh vien cap nhat
+            sc.nextLine();
+            System.out.print("Nhap ho dem: ");
+            String ho_dem = sc.nextLine();
+            System.out.print("Nhap ten: ");
+            String ten = sc.nextLine();
+            System.out.print("Nhap email: ");
+            String email = sc.nextLine();
+            sinhVien.setTen(ten);
+            sinhVien.setHoDem(ho_dem);
+            sinhVien.setEmail(email);
+            sinhVienDAOImpl.update(sinhVien);
+        }
     }
 
     private void layTatCaSinhVien(SinhVienDAOImpl sinhVienDAOImpl) {
@@ -70,6 +134,10 @@ public class MyConfiguration {
                 "2. Tim sinh vien\n" +
                 "3. Tim sinh vien theo ten\n" +
                 "4. Hien thi tat ca sinh vien\n" +
+                "5. Cap nhat sinh vien theo ID\n" +
+                "6. Cap nhat tat ca sinh vien theo ten\n" +
+                "7. Xoa sinh vien theo ID\n" +
+                "8. Xoa sinh vien theo Ten\n" +
                 "Nhap lua chon: "
         );
     }
