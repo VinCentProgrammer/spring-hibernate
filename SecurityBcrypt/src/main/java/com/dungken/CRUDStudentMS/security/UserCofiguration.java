@@ -19,12 +19,20 @@ import java.net.http.HttpRequest;
 public class UserCofiguration {
 
 
+//    @Bean
+//    @Autowired
+//    public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
+//        return new JdbcUserDetailsManager(dataSource);
+//    }
+
     @Bean
     @Autowired
     public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
+        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
+        userDetailsManager.setUsersByUsernameQuery("SELECT id, pw, active FROM accounts WHERE id=?");
+        userDetailsManager.setAuthoritiesByUsernameQuery("SELECT id, role FROM roles WHERE id=?");
+        return userDetailsManager;
     }
-    
     
 //    @Bean
 //    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {

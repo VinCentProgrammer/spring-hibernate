@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>List Student</title>
+    <link rel="stylesheet" th:href="@{../css/bootstrap.min.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>List Student</h1>
+        <a th:href="@{/students/create}" class="btn btn-primary mb-2">Add new</a>
+        <table class="table table-bordered table-striped">
+            <thead class="bg-info">
+                <tr>
+                    <td>ID</td>
+                    <td>First name</td>
+                    <td>Last name</td>
+                    <td>Email</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="student : ${students}">
+                   <td th:text="${student.id}"></td>
+                   <td th:text="${student.lastName}"></td>
+                   <td th:text="${student.firstName}"></td>
+                   <td th:text="${student.email}"></td>
+                    <td>
+                        <a th:href="@{/students/update(id=${student.id})}" class="btn btn-warning btn-sm">Edit</a>
+                        <a th:href="@{/students/delete(id=${student.id})}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Are you sure delete this student?')"
+                        >Remove</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+<script th:src="@{../js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
